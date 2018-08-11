@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://ffdnvptjmj.execute-api.us-east-1.amazonaws.com/desert-ts'
+  apiUrl: 'https://ffdnvptjmj.execute-api.us-east-1.amazonaws.com/desert-tx'
 };
 
 /*
