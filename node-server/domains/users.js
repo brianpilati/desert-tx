@@ -33,8 +33,12 @@ class UserDomain {
     });
   }
 
-  userLogout() {
-    return this.firebase.auth().signOut();
+  userLogout(token) {
+    const firebase = this.firebase;
+    return this.tokenLogin(token)
+    .then(function() {
+     return firebase.auth().signOut();
+    });
   }
 
   tokenLogin(token) {
@@ -49,7 +53,6 @@ class UserDomain {
     .then(function() {
       var uid = firebase.auth().currentUser.uid;
       return firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
-        console.log(username, snapshot.val().username);
         return snapshot.val();
       }).catch(function(error) {
         console.log('userProfile error', error.code, error.message);

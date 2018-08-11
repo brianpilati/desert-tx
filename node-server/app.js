@@ -1,7 +1,6 @@
 
 const firebase = require('./libs/firebaseConfiguration')
 const admin = require('./libs/firebaseAdminConfiguration')
-const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -14,13 +13,11 @@ var corsOptions = {
   optionsSuccessStatus: 200
 };
 
-app.use(express.static(path.join(__dirname, '../../deployment')));
-
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, Content-Type');
+  res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   next();
 });
@@ -41,7 +38,6 @@ app.post('/api/users', cors(corsOptions), function(req, res) {
 });
 
 app.get('/api/users', cors(corsOptions), function(req, res) {
-  console.log(req);
   userDomain.userProfile(req.body.token).then(function(_user_) {
     res.status(200).json({
       user: _user_
@@ -50,7 +46,7 @@ app.get('/api/users', cors(corsOptions), function(req, res) {
 });
 
 app.post('/api/auth', cors(corsOptions), function(req, res) {
-  userDomain.userLogin(userName, password, admin).then(function(_token_) {
+  userDomain.userLogin(req.body.email, req.body.password, admin).then(function(_token_) {
     res.status(200).json({
       token: _token_
     });
@@ -58,11 +54,19 @@ app.post('/api/auth', cors(corsOptions), function(req, res) {
 });
 
 app.get('/api/auth/logout', cors(corsOptions), function(req, res) {
-  userDomain.userLogout().then(function() {
-      res.status(200).json({
-        token: _token_
-      });
-  })
+  const token = req.headers['authorization'];
+  if (token !== 'undefined') {
+    userDomain.userLogout(token).then(function() {
+      res.status(200);
+      res.send();
+    }).catch(function(error) {
+      res.status(200);
+      res.send();
+    });
+  } else {
+    res.status(200);
+    res.send();
+  }
 });
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));

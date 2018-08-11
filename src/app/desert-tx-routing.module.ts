@@ -1,22 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { AuthGuardService } from './authentication/authentication-guard.service';
+import { AuthComponent } from './auth/auth.component';
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/songs',
+    redirectTo: '/file-upload',
     pathMatch: 'full'
   },
-  /*
   {
-    path: 'songs',
-    component: SongsComponent
+    path: 'file-upload',
+    component: FileUploadComponent,
+    canActivate: [AuthGuardService]
   },
   {
-    path: 'songs/:id',
-    component: SongDetailComponent
+    path: 'auth',
+    component: AuthComponent
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent 
   }
-  */
 ];
 
 @NgModule({

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -12,31 +12,69 @@ import {
   MatIconModule,
   MatInputModule,
   MatFormFieldModule,
-  MatSliderModule,
   MatCardModule,
-  MatSlideToggleModule,
-  MatAutocompleteModule
+  MatMenuModule,
+  MatProgressSpinnerModule,
+  MatToolbarModule
 } from '@angular/material';
 
 import { FileUploadComponent } from './file-upload/file-upload.component';
 
 import { DesertTxRoutingModule} from './desert-tx-routing.module';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { AuthComponent } from './auth/auth.component';
+
+import { getLocalStorage } from './factory/local-storage.factory';
+import { StorageService } from './storage/storage.service';
+import { AuthenticationInterceptorService } from './authentication/authentication-interceptor.service';
+import { AuthGuardService } from './authentication/authentication-guard.service';
+import { AuthenticationService } from './authentication/authentication.service';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FileUploadComponent
+    AuthComponent,
+    FileUploadComponent,
+    ToolbarComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    DesertTxRoutingModule,
     FlexLayoutModule,
     FormsModule,
     FormsModule,
     HttpClientModule,
-    DesertTxRoutingModule
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatToolbarModule,
+    ReactiveFormsModule
   ],
+
+
+
+
+
   providers: [
+    AuthenticationService,
+    AuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptorService,
+      multi: true
+    },
+    {
+      provide: 'LOCAL_STORAGE',
+      useFactory: getLocalStorage
+    },
+    StorageService
   ],
   bootstrap: [AppComponent]
 })

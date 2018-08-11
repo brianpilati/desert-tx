@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+
+.mat-menu-content {
+  text-align: right;
+  width: 155px;
+}
+
+a {
+  text-decoration: none;
+}

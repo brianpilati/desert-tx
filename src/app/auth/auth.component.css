@@ -1,0 +1,25 @@
+.center {
+  text-align: center;
+}
+
+.auth-container {
+  margin: 50px;
+}
+
+.auth-form-container {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.auth-full-width {
+  width: 100%;
+}
+
+.button-container {
+  margin: 10px;
+}
+
+mat-card {
+  width: 550px;
+}
