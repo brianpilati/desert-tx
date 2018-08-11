@@ -15,3 +15,20 @@ Installation
 
 ## npm install
 
+# Configuration
+
+copy the provided `serviceAccountKey.json` to the node-server directory
+
+# Execution
+
+## Node Server
+$ cd node-server
+$ node app.js
+
+## Angular Frontend
+$ ng serve
+
+In a browser open http://localhost:4200
+
+
+
