@@ -1,5 +1,6 @@
 
 const firebase = require('./libs/firebaseConfiguration')
+const admin = require('./libs/firebaseAdminConfiguration')
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
@@ -37,6 +38,22 @@ app.post('/api/users', cors(corsOptions), function(req, res) {
   userDomain.createUserLogin(req.body.email, req.body.password).then(function(response) {
     console.log(response);
   });
+});
+
+app.post('/api/auth', cors(corsOptions), function(req, res) {
+  userDomain.userLogin(userName, password, admin).then(function(_token_) {
+      res.status(200).json({
+        token: _token_
+      });
+  });
+});
+
+app.get('/api/auth/logout', cors(corsOptions), function(req, res) {
+  userDomain.userLogout().then(function() {
+      res.status(200).json({
+        token: _token_
+      });
+  })
 });
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));

@@ -38,7 +38,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
-.swp
+*.swp
 serviceAccountKey.json
+adminServiceAccountKey.json
 .editorconfig
 notes.txt

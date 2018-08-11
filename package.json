@@ -25,6 +25,7 @@
     "expressjs": "^1.0.1",
     "file-type": "^9.0.0",
     "firebase": "^5.3.1",
+    "firebase-admin": "^6.0.0",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"
   },
