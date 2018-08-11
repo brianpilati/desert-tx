@@ -45,15 +45,15 @@ class UserDomain {
 
   userProfile(token) {
     const firebase = this.firebase;
-    this.tokenLogin(token)
+    return this.tokenLogin(token)
     .then(function() {
       var uid = firebase.auth().currentUser.uid;
-      firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
-        var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-        console.log(snapshot.val());
+      return firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
         console.log(username, snapshot.val().username);
+        return snapshot.val();
       }).catch(function(error) {
         console.log('userProfile error', error.code, error.message);
+        return (error);
       });
     });
   }

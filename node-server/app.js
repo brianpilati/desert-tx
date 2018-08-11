@@ -40,11 +40,20 @@ app.post('/api/users', cors(corsOptions), function(req, res) {
   });
 });
 
+app.get('/api/users', cors(corsOptions), function(req, res) {
+  console.log(req);
+  userDomain.userProfile(req.body.token).then(function(_user_) {
+    res.status(200).json({
+      user: _user_
+    });
+  });
+});
+
 app.post('/api/auth', cors(corsOptions), function(req, res) {
   userDomain.userLogin(userName, password, admin).then(function(_token_) {
-      res.status(200).json({
-        token: _token_
-      });
+    res.status(200).json({
+      token: _token_
+    });
   });
 });
 
