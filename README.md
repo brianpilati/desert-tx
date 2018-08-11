@@ -17,7 +17,7 @@ Installation
 
 # Configuration
 
-copy the provided `serviceAccountKey.json` to the node-server directory
+copy the provided `serviceAccountKey.json` to the `node-server/libs` directory
 
 # Execution
 

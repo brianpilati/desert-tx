@@ -1,85 +1,42 @@
-const firebase = require("firebase");
-const serviceAccount = require("./serviceAccountKey.json");
 
-firebase.initializeApp(serviceAccount);
+const firebase = require('./libs/firebaseConfiguration')
+const path = require('path');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const app = express();
+const UserDomain = require('./domains/users');
+const userDomain = new UserDomain(firebase);
 
-const email = 'brian@test.com';
-const password = 'secret';
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200
+};
 
-/*
-firebase.auth().createUserWithEmailAndPassword(email, password).
-then(function() {
-  var userId = firebase.auth().currentUser.uid;
-  firebase.database().ref('users/' + userId).set({
-    username: email,
-    email: email
-  }).then(function(call) {
-    console.log(1, call);
-  }).catch(function(error) {
-    console.log('error - 1', error.code, error.message);
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  });
-}).catch(function(error) {
-  console.log('error', error.code, error.message);
-  var errorCode = error.code;
-  var errorMessage = error.message;
-});
-*/
+app.use(express.static(path.join(__dirname, '../../deployment')));
 
+app.use(bodyParser.json());
 
-firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
-  console.log('email', user.user.email);
-  var userId = firebase.auth().currentUser.uid;
-  console.log('uid', userId);
-
-  /*
-  firebase.database().ref('users/' + userId).set({
-    userId: userId,
-    username: email,
-    email: email
-  }).then(function(call) {
-    console.log(1, call);
-  });
-  */
-
-  firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-    var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-    console.log(snapshot.val());
-    console.log(username, snapshot.val().username);
-  }).catch(function(error) {
-    console.log('hmmm', error);
-  });
-  /*
-  firebase.database().ref('/users/' + userId).on('value').then(function(snapshot) {
-    var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-    console.log(snapshot.val());
-    console.log(username, snapshot.val().username);
-  });
-  */
-}).catch(function(error) {
-  console.log('error', error.code, error.message)
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, Content-Type');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  next();
 });
 
+function returnError(res, code, message) {
+  res.status(code).send(
+    Object({
+      status: code,
+      error: message
+    })
+  );
+}
 
-/*
-firebase.auth().signOut().then(function() {
-  console.log('signed-out');
-  // Sign-out successful.
-}).catch(function(error) {
-  // An error happened.
+app.post('/api/users', cors(corsOptions), function(req, res) {
+  userDomain.createUserLogin(req.body.email, req.body.password).then(function(response) {
+    console.log(response);
+  });
 });
-*/
 
-
-
-/*
-firebase.database().ref('users/' + userId).set({
-  username: name,
-  email: email,
-  profile_picture : imageUrl
-});
-*/
+app.listen(3000, () => console.log('Example app listening on port 3000!'));
