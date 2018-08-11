@@ -1,4 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,18 +9,40 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 })
 export class AppComponent {
 
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
+
   acceptedMimeTypes = [
     'image/gif',
     'image/jpeg',
     'image/png'
   ];
 
+  private fileExtension = {
+    'image/gif': 'gif',
+    'image/jpeg': 'jpg',
+    'image/png': 'png'
+  };
+
   @ViewChild('fileInput') fileInput: ElementRef;
   fileDataUri = '';
   errorMsg = '';
 
+  constructor(private http: HttpClient) {}
+
+  private getFile(): any {
+    return this.fileInput.nativeElement.files[0];
+  }
+
+  private getFileType(): any {
+    return this.fileExtension[this.getFile().type];
+  }
+
   previewFile() {
-    const file = this.fileInput.nativeElement.files[0];
+    const file = this.getFile();
     if (file && this.validateFile(file)) {
 
       const reader = new FileReader();
@@ -33,12 +57,27 @@ export class AppComponent {
 
   uploadFile(event: Event) {
     event.preventDefault();
-
-    // get only the base64 file
+    // get only the base64 file and post it
     if (this.fileDataUri.length > 0) {
       const base64File = this.fileDataUri.split(',')[1];
-      // TODO: send to server
-      console.log(base64File);
+      const data = {
+        image: base64File,
+        fileName: `myFileName.${this.getFileType()}`
+      };
+      this.http.post(`${environment.apiUrl}/upload-photos`, data, this.httpOptions)
+        .subscribe(
+          res => {
+            console.log(res);
+            // handle success
+            // reset file input
+            this.fileDataUri = '';
+            this.fileInput.nativeElement.value = '';
+          },
+          err => {
+            console.log(err);
+            this.errorMsg = 'Could not upload image.';
+          }
+        );
     }
 
   }

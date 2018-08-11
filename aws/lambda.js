@@ -30,7 +30,8 @@ exports.handler = (event, context, callback) => {
     if (fileBuffer.length < 500000 && imageTypes.includes(fileTypeInfo.mime)) {
 
         // upload it to s3 with unix timestamp as a file name
-        const fileName = `${Math.floor(new Date() / 1000)}.${fileTypeInfo.ext}`;
+        //const fileName = `${Math.floor(new Date() / 1000)}.${fileTypeInfo.ext}`;
+        const fileName = body['fileName'];
 
         const bucket = process.env.BUCKET;
         const params = {
