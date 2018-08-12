@@ -4,8 +4,8 @@ import { HttpClient} from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators';
-import { StorageService } from '../storage/storage.service';
-import { AuthenticationModel } from '../models/authentication.model';
+import { StorageService } from '../../storage/storage.service';
+import { AuthenticationModel } from '../../models/authentication.model';
 import { Router } from '@angular/router';
 
 @Injectable()

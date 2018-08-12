@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FileUploadComponent } from './file-upload/file-upload.component';
-import { AuthGuardService } from './authentication/authentication-guard.service';
-import { AuthComponent } from './auth/auth.component';
-import { LogoutComponent } from './logout/logout.component';
+import { AuthGuardService } from './authentication/services/authentication-guard.service';
+import { AuthComponent } from './authentication/auth/auth.component';
+import { LogoutComponent } from './authentication/logout/logout.component';
+import { SignupComponent } from './authentication/signup/signup.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent
+  },
+  {
+    path: 'signup',
+    component: SignupComponent 
   },
   {
     path: 'logout',

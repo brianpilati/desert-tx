@@ -1,0 +1,77 @@
+<div
+  class="auth-container"
+  fxLayout="column"
+  fxLayout.xl="column"
+  fxLayoutAlign="space-evenly center"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Login</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+    <form
+      [formGroup]="authForm"
+    >
+      <div fxLayout="column"
+        fxLayoutAlign="space-evenly center"
+      >
+        <div
+          class="auth-form-container"
+        >
+          <mat-form-field class="auth-full-width">
+            <input
+              matInput
+              formControlName="email"
+              placeholder="Email"
+            >
+          </mat-form-field>
+          <mat-form-field class="auth-full-width">
+            <input
+              matInput
+              type="password"
+              formControlName="password"
+              placeholder="Password"
+            >
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-evenly center"
+      class="button-container"
+    >
+      <div>
+        <button
+          (click)="authenticate()"
+          [disabled]="!authForm.valid"
+          mat-raised-button
+          color="accent"
+        >
+          Login 
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          (click)="resetForm()"
+          mat-raised-button
+          color="warn"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </mat-card>
+  <mat-card>
+    <div class="signup">
+      Not a user? <a routerLink="/signup" class="accent-link">Sign-up today</a>
+    </div>
+  </mat-card>
+</div>

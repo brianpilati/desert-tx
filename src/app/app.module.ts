@@ -22,22 +22,24 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 
 import { DesertTxRoutingModule} from './desert-tx-routing.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { AuthComponent } from './auth/auth.component';
+import { AuthComponent } from './authentication/auth/auth.component';
 
 import { getLocalStorage } from './factory/local-storage.factory';
 import { StorageService } from './storage/storage.service';
-import { AuthenticationInterceptorService } from './authentication/authentication-interceptor.service';
-import { AuthGuardService } from './authentication/authentication-guard.service';
-import { AuthenticationService } from './authentication/authentication.service';
-import { LogoutComponent } from './logout/logout.component';
+import { AuthenticationInterceptorService } from './authentication/services/authentication-interceptor.service';
+import { AuthGuardService } from './authentication/services/authentication-guard.service';
+import { AuthenticationService } from './authentication/services/authentication.service';
+import { LogoutComponent } from './authentication/logout/logout.component';
+import { SignupComponent } from './authentication/signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     FileUploadComponent,
-    ToolbarComponent,
-    LogoutComponent
+    LogoutComponent,
+    SignupComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,

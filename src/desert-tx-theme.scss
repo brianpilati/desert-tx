@@ -39,7 +39,6 @@ $desert-tx-primary: (
   )
 );
 
-/*
 $desert-tx-accent: (
   50 : #e4e8f2,
   100 : #bcc6e0,
@@ -72,8 +71,8 @@ $desert-tx-accent: (
       A700 : #ffffff,
   )
 );
-*/
 
+/*
 $desert-tx-accent: (
   50: #f6fcfe,
   100: #e8f7fe,
@@ -106,6 +105,7 @@ $desert-tx-accent: (
     A700: #000000
   )
 );
+*/
 
 $desert-tx-warn: (
   50: #f9eaea,
@@ -156,7 +156,15 @@ $primary: mat-color($candy-app-primary);
 $accent: mat-color($candy-app-accent);
 $warn: mat-color($candy-app-warn);
 
+
+
+
+
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($candy-app-theme);
+
+.accent-link {
+  color: $accent;
+}
