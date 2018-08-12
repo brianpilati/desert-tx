@@ -1,5 +1,5 @@
 <div
-  class="auth-container"
+  class="signup-container"
   fxLayout="column"
   fxLayout.xl="column"
   fxLayoutAlign="space-evenly center"
@@ -19,9 +19,9 @@
         fxLayoutAlign="space-evenly center"
       >
         <div
-          class="auth-form-container"
+          class="signup-form-container"
         >
-          <mat-form-field class="auth-full-width">
+          <mat-form-field class="signup-full-width">
             <input
               matInput
               formControlName="email"
@@ -29,7 +29,7 @@
             >
           </mat-form-field>
           <div [formGroup]="passwordFormGroup">
-            <mat-form-field class="auth-full-width">
+            <mat-form-field class="signup-full-width">
               <input
                 matInput
                 type="password"
@@ -37,7 +37,7 @@
                 placeholder="Password - Atleast 8 Characters"
               >
             </mat-form-field>
-            <mat-form-field class="auth-full-width">
+            <mat-form-field class="signup-full-width">
               <input
                 matInput
                 type="password"
@@ -57,7 +57,6 @@
     <div
       fxLayout="row"
       fxLayoutAlign="space-evenly center"
-      class="button-container"
     >
       <div>
         <button

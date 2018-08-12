@@ -165,8 +165,12 @@ $warn: mat-color($candy-app-warn);
 // that you are using.
 @include angular-material-theme($candy-app-theme);
 
-.accent-link {
+.accent {
   color: $accent;
+}
+
+.primary {
+  color: $primary;
 }
 
 .warn {

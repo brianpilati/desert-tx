@@ -1,18 +1,57 @@
-<h1>Angular File Input</h1>
-<!-- IMG preview -->
-<img [src]="fileDataUri">
+<div
+class="file-upload-container"
+fxLayout="column"
+fxLayout.xl="column"
+fxLayoutAlign="space-evenly center"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h3>Your Photos</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <div
+      fxLayout="column"
+      fxLayoutAlign="space-evenly center"
+    >
+      <div>
+        <!-- IMG preview -->
+        <img [src]="fileDataUri">
+      </div>
+      <form class="form-container">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="space-evenly center"
+        >
+          <p *ngIf="errorMsg" style="color:red">{{errorMsg}}</p>
 
-<p *ngIf="errorMsg" style="color:red">{{errorMsg}}</p>
-
-<!-- Form with submit method and template variable (#fileInput) -->
-<form (submit)="uploadFile($event)">
-  <input
-    type="file"
-    (change)="previewFile()"
-    #fileInput
-  >
-  <button
-    type="submit"
-    [disabled]="fileDataUri.length === 0"
-  >Upload</button>
-</form>
+          <button
+            (click)="openInput()"
+            mat-raised-button
+            color="accent"
+          >
+            Select File to Upload
+          </button>
+          <input
+            hidden
+            type="file"
+            (change)="previewFile()"
+            #fileInput
+          >
+          <button
+            (click)="uploadFile($event)"
+            [disabled]="fileDataUri.length === 0"
+            mat-raised-button
+            color="accent"
+          >
+            Upload
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

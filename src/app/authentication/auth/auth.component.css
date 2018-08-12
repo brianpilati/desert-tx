@@ -1,7 +1,3 @@
-.center {
-  text-align: center;
-}
-
 .auth-container {
   margin: 50px;
 }
@@ -14,10 +10,6 @@
 
 .auth-full-width {
   width: 100%;
-}
-
-.button-container {
-  margin: 10px;
 }
 
 mat-card {

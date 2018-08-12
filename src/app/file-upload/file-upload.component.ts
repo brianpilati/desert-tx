@@ -43,6 +43,10 @@ export class FileUploadComponent implements OnInit {
     return this.fileExtension[this.getFile().type];
   }
 
+  openInput(): void { 
+    this.fileInput.nativeElement.click();
+  }
+
   previewFile() {
     const file = this.getFile();
     if (file && this.validateFile(file)) {
