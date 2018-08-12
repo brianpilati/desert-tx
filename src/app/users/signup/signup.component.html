@@ -7,13 +7,13 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        <h1>Login</h1>
+        <h1>Sign-up Today! It's Free and Easy</h1>
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
 
     <form
-      [formGroup]="authForm"
+      [formGroup]="registrationForm"
     >
       <div fxLayout="column"
         fxLayoutAlign="space-evenly center"
@@ -28,14 +28,26 @@
               placeholder="Email"
             >
           </mat-form-field>
-          <mat-form-field class="auth-full-width">
-            <input
-              matInput
-              type="password"
-              formControlName="password"
-              placeholder="Password"
-            >
-          </mat-form-field>
+          <div [formGroup]="passwordFormGroup">
+            <mat-form-field class="auth-full-width">
+              <input
+                matInput
+                type="password"
+                formControlName="password"
+                placeholder="Password - Atleast 8 Characters"
+              >
+            </mat-form-field>
+            <mat-form-field class="auth-full-width">
+              <input
+                matInput
+                type="password"
+                formControlName="confirmPassword"
+                placeholder="Confirm Password - Atleast 8 Characters"
+              >
+            </mat-form-field>
+            <p class="warn" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Passwords do not match</p>
+            <p class="warn" *ngIf="passwordFormGroup.errors?.doesMatchLength">Passwords must be atleast 8 characters</p>
+          </div>
         </div>
       </div>
     </form>
@@ -49,12 +61,12 @@
     >
       <div>
         <button
-          (click)="authenticate()"
-          [disabled]="!authForm.valid"
+          (click)="register()"
+          [disabled]="!registrationForm.valid"
           mat-raised-button
           color="accent"
         >
-          Login 
+          Sign-up 
         </button>
       </div>
       <div>
@@ -68,7 +80,5 @@
         </button>
       </div>
     </div>
-  </mat-card>
-  <mat-card>
   </mat-card>
 </div>

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { HttpClient} from '@angular/common/http';
 
 import { Observable } from 'rxjs';
@@ -9,9 +8,11 @@ import { AuthenticationModel } from '../../models/authentication.model';
 import { Router } from '@angular/router';
 import { TokenModel } from '../../models/token.model';
 
-@Injectable()
-export class AuthenticationService {
-  private apiAuthUrl = 'http://localhost:3000/api/auth'; 
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  private apiAuthUrl = 'http://localhost:3000/api/users'; 
 
   constructor(
     private http: HttpClient,
@@ -19,17 +20,10 @@ export class AuthenticationService {
     private storageService: StorageService
   ) {}
 
-  authenticate(authentication: AuthenticationModel): Observable<TokenModel> {
+  register(authentication: AuthenticationModel): Observable<TokenModel> {
     return this.http.post<TokenModel>(`${this.apiAuthUrl}`, authentication)
     .pipe(
       tap(token => this.storageService.saveAccessToken(token))
     );
-  }
-
-  logout(): void {
-    this.http.get(`${this.apiAuthUrl}/logout` ).subscribe(() => {
-      this.router.navigate(['auth']);
-    });
-    this.storageService.clearStorage();
   }
 }

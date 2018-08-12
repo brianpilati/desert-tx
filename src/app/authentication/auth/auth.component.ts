@@ -26,9 +26,8 @@ export class AuthComponent implements OnInit {
   createForm() {
     this.authForm = this.formatBuilder.group({
       email: ['', [Validators.required, Validators.maxLength(255), Validators.email]],
-      password: ['', [Validators.required, Validators.maxLength(255)]]
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(255)]]
     });
-
   }
 
   resetForm(): void {

@@ -30,7 +30,8 @@ import { AuthenticationInterceptorService } from './authentication/services/auth
 import { AuthGuardService } from './authentication/services/authentication-guard.service';
 import { AuthenticationService } from './authentication/services/authentication.service';
 import { LogoutComponent } from './authentication/logout/logout.component';
-import { SignupComponent } from './authentication/signup/signup.component';
+import { SignupComponent } from './users/signup/signup.component';
+import { UserService } from './users/services/user.service';
 
 @NgModule({
   declarations: [
@@ -59,11 +60,6 @@ import { SignupComponent } from './authentication/signup/signup.component';
     MatToolbarModule,
     ReactiveFormsModule
   ],
-
-
-
-
-
   providers: [
     AuthenticationService,
     AuthGuardService,
@@ -76,7 +72,8 @@ import { SignupComponent } from './authentication/signup/signup.component';
       provide: 'LOCAL_STORAGE',
       useFactory: getLocalStorage
     },
-    StorageService
+    StorageService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

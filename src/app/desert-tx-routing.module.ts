@@ -4,7 +4,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { AuthGuardService } from './authentication/services/authentication-guard.service';
 import { AuthComponent } from './authentication/auth/auth.component';
 import { LogoutComponent } from './authentication/logout/logout.component';
-import { SignupComponent } from './authentication/signup/signup.component';
+import { SignupComponent } from './users/signup/signup.component';
 
 const routes: Routes = [
   {

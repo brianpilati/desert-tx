@@ -20,7 +20,7 @@ class UserDomain {
 
   userLogin(email, password, admin) {
     const firebase = this.firebase;
-    return this.firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
+    return this.firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
       var uid = firebase.auth().currentUser.uid;
       return admin.auth().createCustomToken(uid).then(function(customToken) {
         return customToken;
@@ -37,7 +37,7 @@ class UserDomain {
     const firebase = this.firebase;
     return this.tokenLogin(token)
     .then(function() {
-     return firebase.auth().signOut();
+      return firebase.auth().signOut();
     });
   }
 

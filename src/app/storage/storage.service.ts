@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
+import { TokenModel } from '../models/token.model';
 
 @Injectable()
 export class StorageService {
@@ -10,8 +11,8 @@ export class StorageService {
     }
   }
 
-  saveAccessToken(accessToken: string): void {
-    this.localStorage.accessToken = accessToken;
+  saveAccessToken(tokenModel: TokenModel): void {
+    this.localStorage.accessToken = tokenModel.token;
   }
 
   getAccessToken(): any {
