@@ -8,6 +8,7 @@ export class StorageService {
   private clearAccessToken(): void {
     if (this.localStorage.accessToken) {
       this.localStorage.removeItem('accessToken');
+      this.localStorage.removeItem('uid');
       this.localStorage.removeItem('accessTokenExpiration');
     }
   }
@@ -20,10 +21,15 @@ export class StorageService {
   saveAccessToken(tokenModel: TokenModel): void {
     this.setTokenExpiration();
     this.localStorage.accessToken = tokenModel.token;
+    this.localStorage.uid = tokenModel.uid;
   }
 
   isTokenActive(): boolean {
     return this.localStorage.accessTokenExpiration > Date.now() && this.getAccessToken();
+  }
+
+  getUserId(): string {
+    return this.localStorage.uid;
   }
 
   getAccessToken(): any {

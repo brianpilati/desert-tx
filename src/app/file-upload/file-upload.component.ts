@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import { StorageService } from '../storage/storage.service';
+import { FileUploadService } from './services/file-upload.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -8,20 +8,18 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent implements OnInit {
+
   @ViewChild('fileInput') fileInput: ElementRef;
   fileDataUri = '';
   errorMsg = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private fileUploadService: FileUploadService,
+    private storageService: StorageService
+  ) {}
 
   ngOnInit() {
   }
-
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
 
   acceptedMimeTypes = [
     'image/gif',
@@ -68,15 +66,20 @@ export class FileUploadComponent implements OnInit {
       const base64File = this.fileDataUri.split(',')[1];
       const data = {
         image: base64File,
-        fileName: `myFileName.${this.getFileType()}`
+        fileName: `${this.storageService.getUserId()}/${Date.now()}.${this.getFileType()}`
       };
-      this.http.post(`${environment.apiUrl}/upload-photos`, data, this.httpOptions)
+
+      this.fileUploadService.uploadFile(data)
         .subscribe(
           res => {
-            // handle success
-            // reset file input
-            this.fileDataUri = '';
-            this.fileInput.nativeElement.value = '';
+            this.fileUploadService.saveFile({
+              fileName: data.fileName
+            }).subscribe(res => {
+              this.fileDataUri = '';
+              this.fileInput.nativeElement.value = '';
+            }, err => {
+              this.errorMsg = 'Could not upload image.';
+            });
           },
           err => {
             this.errorMsg = 'Could not upload image.';

@@ -3,27 +3,21 @@ class UserDomain {
     this.firebase = firebase;
   }
 
-
   createUserLogin(email, password) {
     const firebase = this.firebase;
-    return this.firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-      var userId = firebase.auth().currentUser.uid;
-      firebase.database().ref('users/' + userId).set({
-        username: email,
-        email: email
-      }).catch(function(error) {
-        console.log('createUser error', error.code, error.message);
-      });
-    }).catch(function(error) {
-      console.log('createUserLogin error', error.code, error.message);
-    });
+    return this.firebase.auth().createUserWithEmailAndPassword(email, password);
   }
 
   userLogin(email, password, admin) {
     const firebase = this.firebase;
     return this.firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
-      var uid = firebase.auth().currentUser.uid;
-      return admin.auth().createCustomToken(uid);
+      var _uid_ = firebase.auth().currentUser.uid;
+      return admin.auth().createCustomToken(_uid_).then(function(_token_) {
+        return {
+          uid: _uid_,
+          token: _token_
+        };
+       });
     });
   }
 

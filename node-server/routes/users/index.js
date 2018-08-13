@@ -9,9 +9,7 @@ const utilities = require('../../libs/utilities');
 router.post('/', cors(corsOptions), function(req, res) {
   userDomain.createUserLogin(req.body.email, req.body.password, ).then(function() {
     userDomain.userLogin(req.body.email, req.body.password, admin).then(function(_token_){
-      res.status(200).json({
-        token: _token_
-      });
+      res.status(200).json(_token_);
     }).catch(function(_error_) {
       res.status(401).json(_error_);
     });
