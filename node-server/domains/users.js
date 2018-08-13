@@ -46,8 +46,7 @@ class UserDomain {
       var user = firebase.auth().currentUser;
       return Object({
         displayName: user.displayName,
-        email: user.email,
-        phoneNumber: user.phoneNumber
+        email: user.email
       });
     });
   }
