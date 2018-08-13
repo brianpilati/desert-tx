@@ -1,0 +1,70 @@
+<div
+  class="user-profile-container"
+  fxLayout="column"
+  fxLayout.xl="column"
+  fxLayoutAlign="space-evenly center"
+>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Login</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+    <form
+      [formGroup]="userProfileForm"
+    >
+      <div fxLayout="column"
+        fxLayoutAlign="space-evenly center"
+      >
+        <div
+          class="user-profile-form-container"
+        >
+          <mat-form-field class="user-profile-full-width">
+            <input
+              matInput
+              formControlName="displayName"
+              placeholder="Display Name"
+            >
+          </mat-form-field>
+          <mat-form-field class="user-profile-full-width">
+            <input
+              matInput
+              formControlName="email"
+              placeholder="Email"
+            >
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-evenly center"
+    >
+      <div>
+        <button
+          (click)="update()"
+          [disabled]="!userProfileForm.valid"
+          mat-raised-button
+          color="accent"
+        >
+          Login 
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          (click)="resetForm()"
+          mat-raised-button
+          color="warn"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>

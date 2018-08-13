@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators';
 import { StorageService } from '../../storage/storage.service';
 import { AuthenticationModel } from '../../models/authentication.model';
+import { UserModel } from '../../models/user.model';
 import { Router } from '@angular/router';
 import { TokenModel } from '../../models/token.model';
 
@@ -12,7 +13,7 @@ import { TokenModel } from '../../models/token.model';
   providedIn: 'root'
 })
 export class UserService {
-  private apiAuthUrl = 'http://localhost:3000/api/users'; 
+  private apiUserUrl = 'http://localhost:3000/api/users'; 
 
   constructor(
     private http: HttpClient,
@@ -21,9 +22,17 @@ export class UserService {
   ) {}
 
   register(authentication: AuthenticationModel): Observable<TokenModel> {
-    return this.http.post<TokenModel>(`${this.apiAuthUrl}`, authentication)
+    return this.http.post<TokenModel>(`${this.apiUserUrl}`, authentication)
     .pipe(
       tap(token => this.storageService.saveAccessToken(token))
     );
+  }
+
+  update(user: UserModel): Observable<UserModel> {
+    return this.http.put<UserModel>(`${this.apiUserUrl}`, user);
+  }
+
+  get(): Observable<UserModel> {
+    return this.http.get<UserModel>(`${this.apiUserUrl}`);
   }
 }

@@ -32,6 +32,7 @@ import { AuthenticationService } from './authentication/services/authentication.
 import { LogoutComponent } from './authentication/logout/logout.component';
 import { SignupComponent } from './users/signup/signup.component';
 import { UserService } from './users/services/user.service';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { UserService } from './users/services/user.service';
     FileUploadComponent,
     LogoutComponent,
     SignupComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

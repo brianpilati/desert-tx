@@ -1,4 +1,3 @@
-
 const firebase = require('./libs/firebaseConfiguration')
 const admin = require('./libs/firebaseAdminConfiguration')
 const express = require('express');
@@ -7,11 +6,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const UserDomain = require('./domains/users');
 const userDomain = new UserDomain(firebase);
-
-var corsOptions = {
-  origin: 'http://localhost:4200',
-  optionsSuccessStatus: 200
-};
 
 app.use(bodyParser.json());
 
@@ -22,6 +16,13 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use('/api', require('./routes'));
+
+var corsOptions = {
+  origin: 'http://localhost:4200',
+  optionsSuccessStatus: 200
+};
+
 function returnError(res, code, message) {
   res.status(code).send(
     Object({
@@ -30,24 +31,6 @@ function returnError(res, code, message) {
     })
   );
 }
-
-app.post('/api/users', cors(corsOptions), function(req, res) {
-  userDomain.createUserLogin(req.body.email, req.body.password, ).then(function() {
-    userDomain.userLogin(req.body.email, req.body.password, admin).then(function(_token_){
-      res.status(200).json({
-        token: _token_
-      });
-    })
-  });
-});
-
-app.get('/api/users', cors(corsOptions), function(req, res) {
-  userDomain.userProfile(req.body.token).then(function(_user_) {
-    res.status(200).json({
-      user: _user_
-    });
-  });
-});
 
 app.post('/api/auth', cors(corsOptions), function(req, res) {
   userDomain.userLogin(req.body.email, req.body.password, admin).then(function(_token_) {
