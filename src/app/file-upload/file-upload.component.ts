@@ -73,14 +73,12 @@ export class FileUploadComponent implements OnInit {
       this.http.post(`${environment.apiUrl}/upload-photos`, data, this.httpOptions)
         .subscribe(
           res => {
-            console.log(res);
             // handle success
             // reset file input
             this.fileDataUri = '';
             this.fileInput.nativeElement.value = '';
           },
           err => {
-            console.log(err);
             this.errorMsg = 'Could not upload image.';
           }
         );

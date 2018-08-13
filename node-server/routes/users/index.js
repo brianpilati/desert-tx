@@ -12,19 +12,31 @@ router.post('/', cors(corsOptions), function(req, res) {
       res.status(200).json({
         token: _token_
       });
-    })
+    }).catch(function(_error_) {
+      res.status(401).json(_error_);
+    });
   });
 });
 
 router.get('/', cors(corsOptions), function(req, res) {
   userDomain.userProfile(utilities.getToken(req)).then(function(_user_) {
     res.status(200).json(_user_);
+  }).catch(function(_error_) {
+    res.status(401).json(_error_);
   });
 });
 
 router.put('/', cors(corsOptions), function(req, res) {
-  userDomain.updateProfile(utilities.getToken(req), req.body).then(function(_user_) {
-    res.status(200).json(_user_);
+  userDomain.updateProfile(utilities.getToken(req), req.body).then(function() {
+    res.status(200);
+    res.send();
+  });
+});
+
+router.put('/password', cors(corsOptions), function(req, res) {
+  userDomain.updatePassword(utilities.getToken(req), req.body).then(function() {
+    res.status(200);
+    res.send();
   });
 });
 

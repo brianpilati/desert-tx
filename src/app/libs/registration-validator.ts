@@ -5,20 +5,22 @@ export class RegistrationValidator {
     const password = registrationFormGroup.controls.password.value;
     const confirmPassword = registrationFormGroup.controls.confirmPassword.value;
 
-    if (confirmPassword.length <= 0) {
-      return null;
-    }
+    if (confirmPassword) {
+      if (confirmPassword.length <= 0) {
+        return null;
+      }
 
-    if (confirmPassword !== password) {
-      return {
-        doesMatchPassword: true
-      };
-    }
+      if (confirmPassword !== password) {
+        return {
+          doesMatchPassword: true
+        };
+      }
 
-    if (confirmPassword.length < 8) {
-      return {
-        doesMatchLength: true
-      };
+      if (confirmPassword.length < 8) {
+        return {
+          doesMatchLength: true
+        };
+      }
     }
 
     return null;

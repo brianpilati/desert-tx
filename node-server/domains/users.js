@@ -23,14 +23,7 @@ class UserDomain {
     const firebase = this.firebase;
     return this.firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
       var uid = firebase.auth().currentUser.uid;
-      return admin.auth().createCustomToken(uid).then(function(customToken) {
-        return customToken;
-      })
-      .catch(function(error) {
-        console.log("Error creating custom token:", error.code, error.message);
-      });
-    }).catch(function(error) {
-      console.log('userLogin error', error.code, error.message);
+      return admin.auth().createCustomToken(uid);
     });
   }
 
@@ -43,9 +36,7 @@ class UserDomain {
   }
 
   tokenLogin(token) {
-    return this.firebase.auth().signInWithCustomToken(token).catch(function(error) {
-      console.log('tokenLogin error', error.code, error.message);
-    });
+    return this.firebase.auth().signInWithCustomToken(token);
   }
 
   userProfile(token) {
@@ -71,6 +62,15 @@ class UserDomain {
       }).then(function() {
         return user.updateEmail(body['email']);
       });
+    });
+  }
+
+  updatePassword(token, body) {
+    const firebase = this.firebase;
+    return this.tokenLogin(token)
+    .then(function() {
+      var user = firebase.auth().currentUser;
+      return user.updatePassword(body['password']);
     });
   }
 };

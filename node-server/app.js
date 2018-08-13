@@ -37,6 +37,8 @@ app.post('/api/auth', cors(corsOptions), function(req, res) {
     res.status(200).json({
       token: _token_
     });
+  }).catch(function(_error_) {
+    res.status(401).json(_error_);
   });
 });
 

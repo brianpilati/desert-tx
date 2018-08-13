@@ -6,8 +6,8 @@ import { tap } from 'rxjs/internal/operators';
 import { StorageService } from '../../storage/storage.service';
 import { AuthenticationModel } from '../../models/authentication.model';
 import { UserModel } from '../../models/user.model';
-import { Router } from '@angular/router';
 import { TokenModel } from '../../models/token.model';
+import { UserPasswordModel } from '../../models/user-password.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,6 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private router: Router,
     private storageService: StorageService
   ) {}
 
@@ -28,11 +27,15 @@ export class UserService {
     );
   }
 
-  update(user: UserModel): Observable<UserModel> {
-    return this.http.put<UserModel>(`${this.apiUserUrl}`, user);
+  update(userModel: UserModel): Observable<any> {
+    return this.http.put(`${this.apiUserUrl}`, userModel);
   }
 
   get(): Observable<UserModel> {
     return this.http.get<UserModel>(`${this.apiUserUrl}`);
+  }
+
+  updatePassword(userPasswordModel: UserPasswordModel): Observable<any> {
+    return this.http.put(`${this.apiUserUrl}/password`, userPasswordModel);
   }
 }
