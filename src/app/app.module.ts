@@ -16,7 +16,7 @@ import {
   MatMenuModule,
   MatProgressSpinnerModule,
   MatToolbarModule,
-  MatSnackBarModule
+  MatTabsModule
 } from '@angular/material';
 
 import { FileUploadComponent } from './file-upload/file-upload.component';
@@ -60,7 +60,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    MatSnackBarModule,
+    MatTabsModule,
     MatToolbarModule,
     ReactiveFormsModule
   ],

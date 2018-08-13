@@ -11,6 +11,7 @@ import { FileModel } from '../models/file.model';
 export class FileUploadComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
+  public carouselPhotos: FileModel[];
   fileDataUri = '';
   errorMsg = '';
 
@@ -20,7 +21,9 @@ export class FileUploadComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.fileUploadService.getFiles().subscribe((files) => console.log(files));
+    this.fileUploadService.getFiles().subscribe((files) => 
+      this.carouselPhotos = files
+    );
   }
 
   acceptedMimeTypes = [

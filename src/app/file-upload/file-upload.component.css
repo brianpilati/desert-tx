@@ -19,3 +19,13 @@ mat-card {
 .form-container {
   width: 100%;
 }
+
+.tab-photo-content {
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview-image {
+  width: 90%;
+}
