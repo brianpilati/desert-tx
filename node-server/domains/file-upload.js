@@ -13,8 +13,23 @@ class FileUploadDomain {
     const firebase = this.firebase;
     return this.tokenLogin(token).then(function() {
       var uid = firebase.auth().currentUser.uid;
-      return firebase.database().ref('files/' + uid).set({
+      const filesRef = firebase.database().ref('files').child( uid);
+      filesRef.push({
         fileName: body['fileName']
+      });
+    });
+  }
+
+  getFiles(token) {
+    const firebase = this.firebase;
+    return this.tokenLogin(token).then(function() {
+      var uid = firebase.auth().currentUser.uid;
+      return firebase.database().ref('files/' + uid).once('value').then(function(snapshot) {
+        const files = [];
+        snapshot.forEach(function(childSnapshot) {
+          files.push(childSnapshot.val());
+        });
+        return files;
       });
     });
   }

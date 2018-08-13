@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
 import { StorageService } from '../storage/storage.service';
 import { FileUploadService } from './services/file-upload.service';
+import { FileModel } from '../models/file.model';
 
 @Component({
   selector: 'app-file-upload',
@@ -19,6 +20,7 @@ export class FileUploadComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.fileUploadService.getFiles().subscribe((files) => console.log(files));
   }
 
   acceptedMimeTypes = [
@@ -72,7 +74,7 @@ export class FileUploadComponent implements OnInit {
       this.fileUploadService.uploadFile(data)
         .subscribe(
           res => {
-            this.fileUploadService.saveFile({
+            this.fileUploadService.saveFile(<FileModel>{
               fileName: data.fileName
             }).subscribe(res => {
               this.fileDataUri = '';

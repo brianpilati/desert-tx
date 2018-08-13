@@ -13,4 +13,10 @@ router.post('/', cors(corsOptions), function(req, res) {
   })
 });
 
+router.get('/', cors(corsOptions), function(req, res) {
+  fileUploadDomain.getFiles(utilities.getToken(req)).then(function(_files_) {
+    res.status(200).json(_files_);
+  })
+});
+
 module.exports = router;  
