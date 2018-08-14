@@ -8,6 +8,7 @@ import { AuthenticationModel } from '../../models/authentication.model';
 import { UserModel } from '../../models/user.model';
 import { TokenModel } from '../../models/token.model';
 import { UserPasswordModel } from '../../models/user-password.model';
+import { AuthenticationService } from '../../authentication/services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private authenticationService: AuthenticationService
   ) {}
 
   getUserProfileUpdatedSubject(): Subject<boolean> {
@@ -28,13 +30,16 @@ export class UserService {
   register(authentication: AuthenticationModel): Observable<TokenModel> {
     return this.http.post<TokenModel>(`${this.apiUserUrl}`, authentication)
     .pipe(
-      tap(token => this.storageService.saveAccessToken(token))
+      tap(token => {
+        this.authenticationService.getAuthenticatedSubject().next(true);
+        this.storageService.saveAccessToken(token);
+      })
     );
   }
 
   update(userModel: UserModel): Observable<UserModel> {
     return this.http.put<UserModel>(`${this.apiUserUrl}`, userModel).pipe(
-      tap(user => {
+      tap(() => {
         this.storageService.savePhotoUrl(userModel.photoUrl);
         this.userProfileUpdatedSubject.next(true);
       })

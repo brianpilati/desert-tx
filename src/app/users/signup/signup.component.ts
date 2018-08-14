@@ -50,7 +50,9 @@ export class SignupComponent implements OnInit {
         email: this.registrationForm.get('email').value,
         password: this.passwordFormGroup.get('password').value,
       }
-      this.userService.register(authenticationModel).subscribe(() => this.router.navigate(['file-upload']));
+      this.userService.register(authenticationModel).subscribe(() => {
+        this.router.navigate(['file-upload']);
+      });
     }
   }
 }
