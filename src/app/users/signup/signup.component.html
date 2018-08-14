@@ -34,7 +34,7 @@
                 matInput
                 type="password"
                 formControlName="password"
-                placeholder="Password - Atleast 8 Characters"
+                placeholder="Password - must be at least 8 Characters"
               >
             </mat-form-field>
             <mat-form-field class="signup-full-width">
@@ -42,11 +42,11 @@
                 matInput
                 type="password"
                 formControlName="confirmPassword"
-                placeholder="Confirm Password - Atleast 8 Characters"
+                placeholder="Confirm Password - must be at least 8 Characters"
               >
             </mat-form-field>
             <p class="warn" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Passwords do not match</p>
-            <p class="warn" *ngIf="passwordFormGroup.errors?.doesMatchLength">Passwords must be atleast 8 characters</p>
+            <p class="warn" *ngIf="passwordFormGroup.errors?.doesMatchLength">Passwords must be at least 8 characters</p>
           </div>
         </div>
       </div>

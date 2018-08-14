@@ -15,7 +15,7 @@ export class StorageService {
 
   private setTokenExpiration() {
     this.localStorage.accessTokenExpiration = 
-    Date.now() + 60 * 60 * 1000;
+    Date.now() + 60 * 60 * 1000 * 2;
   }
 
   saveAccessToken(tokenModel: TokenModel): void {
@@ -36,7 +36,6 @@ export class StorageService {
     if (this.localStorage.accessToken) {
       return this.localStorage.accessToken;
     }
-
     return;
   }
 

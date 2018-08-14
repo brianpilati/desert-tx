@@ -1,10 +1,10 @@
 import { Injectable, Injector } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { StorageService } from '../../storage/storage.service';
-import { tap, map, catchError, last } from 'rxjs/internal/operators';
-import { Router } from '../../../../node_modules/@angular/router';
+import { catchError, last } from 'rxjs/internal/operators';
 import { UNAUTHORIZED } from '../../../../node_modules/http-status-codes';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class AuthenticationInterceptorService implements HttpInterceptor {
@@ -30,8 +30,8 @@ export class AuthenticationInterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(catchError((error) => {
       if (error.status == UNAUTHORIZED) {
-        const router = this.injector.get(Router);
-        router.navigateByUrl('/auth');
+        const authenticationService = this.injector.get(AuthenticationService);
+        authenticationService.logout();
       }
       return of(error);
     }) as any);

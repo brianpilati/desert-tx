@@ -15,3 +15,20 @@
 mat-card {
   width: 550px;
 }
+
+.user-profile-group-container {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.loading-class {
+  margin: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.button-container {
+  width: 100%;
+  margin: 25px;
+}

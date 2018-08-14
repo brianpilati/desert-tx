@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
   public userProfileForm: FormGroup;
   public userPasswordForm: FormGroup;
   public user: UserModel;
+  public isLoading = true;
 
   constructor(
     private userService: UserService,
@@ -24,6 +25,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.get().subscribe((user) => {
+      this.isLoading = false;
       this.user = user 
       this.setUserValues();
     });

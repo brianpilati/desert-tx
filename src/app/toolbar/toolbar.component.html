@@ -2,30 +2,35 @@
   <mat-toolbar-row>
     <span class="accent">Desert-Tx File Platform</span>
     <span class="menu-spacer"></span>
-    <button mat-button [matMenuTriggerFor]="menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <a routerLink="/file-upload">
-        <button mat-menu-item>
-          <mat-icon>open_in_browser</mat-icon>
-          <span>File Uploads</span>
-        </button>
-      </a>
-      <a routerLink="/user/profile">
-        <button mat-menu-item>
-          <mat-icon>person</mat-icon>
-          <span>Profile</span>
-        </button>
-      </a>
-      <a routerLink="/logout">
-        <button 
-          mat-menu-item
-        >
-          <mat-icon>exit_to_app</mat-icon>
-          <span>Logout</span>
-        </button>
-      </a>
-    </mat-menu>
+    <span *ngIf="isAuthenticated" class="profile-icon">
+      <mat-icon>person</mat-icon>
+    </span>
+    <span *ngIf="isAuthenticated">
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <a routerLink="/file-upload">
+          <button mat-menu-item>
+            <mat-icon>open_in_browser</mat-icon>
+            <span>File Uploads</span>
+          </button>
+        </a>
+        <a routerLink="/user/profile">
+          <button mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+        </a>
+        <a routerLink="/logout">
+          <button 
+            mat-menu-item
+          >
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Logout</span>
+          </button>
+        </a>
+      </mat-menu>
+    </span>
   </mat-toolbar-row>
 </mat-toolbar>

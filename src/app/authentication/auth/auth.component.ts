@@ -21,6 +21,7 @@ export class AuthComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authenticationService.isAuthPage();
   }
 
   createForm() {

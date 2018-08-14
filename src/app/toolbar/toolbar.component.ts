@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../authentication/services/authentication.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
+  isAuthenticated = true;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    authenticationService: AuthenticationService
+  ) { 
+    authenticationService.getAuthenticatedSubject().subscribe((isAuthenticated) => {
+      this.isAuthenticated = isAuthenticated;
+    })
   }
 
+  ngOnInit() { }
 }

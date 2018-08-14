@@ -1,143 +1,134 @@
 <div
-  class="user-profile-container"
   fxLayout="column"
-  fxLayout.xl="column"
   fxLayoutAlign="space-evenly center"
 >
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <h1>Profile</h1>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-
-    <form
-      [formGroup]="userProfileForm"
-    >
-      <div fxLayout="column"
-        fxLayoutAlign="space-evenly center"
-      >
-        <div
-          class="user-profile-form-container"
-        >
-          <mat-form-field class="user-profile-full-width">
-            <input
-              matInput
-              formControlName="displayName"
-              placeholder="Display Name"
-            >
-          </mat-form-field>
-          <mat-form-field class="user-profile-full-width">
-            <input
-              matInput
-              formControlName="email"
-              placeholder="Email"
-            >
-          </mat-form-field>
+  <div class="user-profile-group-container">
+    <mat-tab-group>
+      <mat-tab [disabled]="disabled">
+        <ng-template mat-tab-label>
+          Profile
+        </ng-template>
+        <div *ngIf="isLoading" class="loading-class">
+          <mat-spinner color="warn"></mat-spinner>
         </div>
-      </div>
-    </form>
-    </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="space-evenly center"
-    >
-      <div>
-        <button
-          (click)="updateUser()"
-          [disabled]="!userProfileForm.valid"
-          mat-raised-button
-          color="accent"
-        >
-          Update 
-        </button>
-      </div>
-      <div>
-        <button
-          type="button"
-          (click)="resetForm()"
-          mat-raised-button
-          color="warn"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </mat-card>
-</div>
-<div
-  class="user-profile-container"
-  fxLayout="column"
-  fxLayout.xl="column"
-  fxLayoutAlign="space-evenly center"
->
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <h1>Password</h1>
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form
-        [formGroup]="userPasswordForm"
-      >
-        <div fxLayout="column"
-          fxLayoutAlign="space-evenly center"
-        >
-          <div
-            class="user-profile-form-container"
-          >
-            <mat-form-field class="user-profile-full-width">
-              <input
-                matInput
-                type="password"
-                formControlName="password"
-                placeholder="New Password - Atleast 8 Characters"
+        <div *ngIf="!isLoading">
+          <mat-card>
+            <mat-card-content>
+              <form
+                [formGroup]="userProfileForm"
+                (submit)="updateUser()"
               >
-            </mat-form-field>
-            <mat-form-field class="user-profile-full-width">
-              <input
-                matInput
-                type="password"
-                formControlName="confirmPassword"
-                placeholder="New Confirm Password - Atleast 8 Characters"
-              >
-            </mat-form-field>
-            <p class="warn" *ngIf="userPasswordForm.errors?.doesMatchPassword">Passwords do not match</p>
-            <p class="warn" *ngIf="userPasswordForm.errors?.doesMatchLength">Passwords must be atleast 8 characters</p>
-          </div>
+                <div fxLayout="column"
+                  fxLayoutAlign="space-evenly center"
+                >
+                  <div
+                    class="user-profile-form-container"
+                  >
+                    <mat-form-field class="user-profile-full-width">
+                      <input
+                        matInput
+                        formControlName="displayName"
+                        placeholder="Display Name"
+                      >
+                    </mat-form-field>
+                    <mat-form-field class="user-profile-full-width">
+                      <input
+                        matInput
+                        formControlName="email"
+                        placeholder="Email"
+                      >
+                    </mat-form-field>
+                  </div>
+                  <div
+                    fxLayout="row"
+                    class="button-container"
+                    fxLayoutAlign="space-evenly center"
+                  >
+                    <button
+                      type="submit"
+                      [disabled]="!userProfileForm.valid"
+                      mat-raised-button
+                      color="accent"
+                    >
+                      Update 
+                    </button>
+                    <button
+                      type="button"
+                      (click)="resetForm()"
+                      mat-raised-button
+                      color="warn"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
         </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-  <mat-card>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="space-evenly center"
-    >
-      <div>
-        <button
-          (click)="updatePassword()"
-          [disabled]="!userPasswordForm.valid"
-          mat-raised-button
-          color="accent"
-        >
-          Update
-        </button>
-      </div>
-      <div>
-        <button
-          type="button"
-          (click)="resetPasswordForm()"
-          mat-raised-button
-          color="warn"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </mat-card>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          Password
+        </ng-template>
+        <mat-card>
+          <mat-card-content>
+            <form
+              [formGroup]="userPasswordForm"
+              (submit)="updatePassword()"
+            >
+              <div fxLayout="column"
+                fxLayoutAlign="space-evenly center"
+              >
+                <div
+                  class="user-profile-form-container"
+                >
+                  <mat-form-field class="user-profile-full-width">
+                    <input
+                      matInput
+                      type="password"
+                      formControlName="password"
+                      placeholder="New Password - must be at least 8 Characters"
+                    >
+                  </mat-form-field>
+                  <mat-form-field class="user-profile-full-width">
+                    <input
+                      matInput
+                      type="password"
+                      formControlName="confirmPassword"
+                      placeholder="New Confirm Password - must be at least 8 Characters"
+                    >
+                  </mat-form-field>
+                  <p class="warn" *ngIf="userPasswordForm.errors?.doesMatchPassword">Passwords do not match</p>
+                  <p class="warn" *ngIf="userPasswordForm.errors?.doesMatchLength">Passwords must be at least 8 characters</p>
+                </div>
+                <div
+                  fxLayout="row"
+                  class="button-container"
+                  fxLayoutAlign="space-evenly center"
+                >
+                  <button
+                    type="submit"
+                    [disabled]="!userPasswordForm.valid"
+                    mat-raised-button
+                    color="accent"
+                  >
+                    Update
+                  </button>
+                  <button
+                    type="button"
+                    (click)="resetPasswordForm()"
+                    mat-raised-button
+                    color="warn"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
