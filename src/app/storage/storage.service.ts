@@ -40,7 +40,7 @@ export class StorageService {
   }
 
   getUserPhotoUrl(): string {
-    return this.localStorage.photoUrl;
+    return this.localStorage.photoUrl || '';
   }
 
   getAccessToken(): any {
