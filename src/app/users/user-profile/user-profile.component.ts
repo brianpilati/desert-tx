@@ -11,6 +11,7 @@ import { UserPasswordModel } from '../../models/user-password.model';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+  public selectedTab = 0;
   public userProfileForm: FormGroup;
   public userPasswordForm: FormGroup;
   public user: UserModel;
@@ -69,7 +70,10 @@ export class UserProfileComponent implements OnInit {
       this.userService.updatePassword(
         <UserPasswordModel>
         this.userPasswordForm.value
-      ).subscribe(() => this.resetPasswordForm());
+      ).subscribe(() => {
+        this.selectedTab = 0;
+        this.resetPasswordForm()
+      });
     }
   }
 }

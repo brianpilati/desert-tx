@@ -3,7 +3,10 @@
   fxLayoutAlign="space-evenly center"
 >
   <div class="user-profile-group-container">
-    <mat-tab-group>
+    <mat-tab-group
+      [selectedIndex]="selectedTab"
+      (selectedIndexChange)="selectedTab=$event"
+    >
       <mat-tab [disabled]="disabled">
         <ng-template mat-tab-label>
           Profile
