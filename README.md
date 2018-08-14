@@ -49,7 +49,7 @@ Brian
 
 ## node v10.7.0 (or equivalent)
 ## npm v6.1.0 (or equivalent)
-## npm install -g @angular/cli
+$ npm install -g @angular/cli
 
 # File Structure
 
@@ -66,7 +66,8 @@ Brian
 
 # Installation
 
-## npm install
+$ cd to repo
+$ npm install
 
 # Configuration
 
@@ -75,13 +76,14 @@ copy the provided `adminServiceAccountKey.json` to the `node-server/libs` direct
 
 # Angular Review
 
+$ cd repo
 $ npm run docs
-$ open docs/index.html
+$ open repo/docs/index.html
 
 # Execution
 
 ## Node Server and angular frontend
-$ cd node-server
+$ cd repo/node-server
 $ node app.js &
 $ ng serve
 
