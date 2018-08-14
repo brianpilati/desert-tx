@@ -9,6 +9,7 @@ export class StorageService {
     if (this.localStorage.accessToken) {
       this.localStorage.removeItem('accessToken');
       this.localStorage.removeItem('uid');
+      this.localStorage.removeItem('photoUrl');
       this.localStorage.removeItem('accessTokenExpiration');
     }
   }
@@ -18,10 +19,15 @@ export class StorageService {
     Date.now() + 60 * 60 * 1000 * 2;
   }
 
+  savePhotoUrl(photoUrl: string): void {
+    this.localStorage.photoUrl = photoUrl;
+  }
+
   saveAccessToken(tokenModel: TokenModel): void {
     this.setTokenExpiration();
     this.localStorage.accessToken = tokenModel.token;
     this.localStorage.uid = tokenModel.uid;
+    this.savePhotoUrl(tokenModel.photoUrl);
   }
 
   isTokenActive(): boolean {
@@ -30,6 +36,10 @@ export class StorageService {
 
   getUserId(): string {
     return this.localStorage.uid;
+  }
+
+  getUserPhotoUrl(): string {
+    return this.localStorage.photoUrl;
   }
 
   getAccessToken(): any {

@@ -38,7 +38,8 @@ export class UserProfileComponent implements OnInit {
   createForm() {
     this.userProfileForm = this.formatBuilder.group({
       email: ['', [Validators.required, Validators.maxLength(255), Validators.email]],
-      displayName: ['', [Validators.required, Validators.maxLength(255)]]
+      displayName: ['', [Validators.required, Validators.maxLength(255)]],
+      photoUrl: ['', [Validators.maxLength(255), Validators.email]]
     });
 
     this.userPasswordForm = this.formatBuilder.group({

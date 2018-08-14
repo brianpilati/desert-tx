@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { GravatarModule } from  'ngx-gravatar';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
@@ -52,6 +54,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
     FlexLayoutModule,
     FormsModule,
     FormsModule,
+    GravatarModule,
     HttpClientModule,
     MatButtonModule,
     MatCardModule,

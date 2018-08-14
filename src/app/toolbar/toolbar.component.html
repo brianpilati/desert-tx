@@ -3,7 +3,7 @@
     <span class="accent">Desert-Tx File Platform</span>
     <span class="menu-spacer"></span>
     <span *ngIf="isAuthenticated" class="profile-icon">
-      <mat-icon>person</mat-icon>
+      <img ngxGravatar [email]="photoUrl" size="24">
     </span>
     <span *ngIf="isAuthenticated">
       <button mat-button [matMenuTriggerFor]="menu">

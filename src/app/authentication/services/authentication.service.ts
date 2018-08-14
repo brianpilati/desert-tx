@@ -12,7 +12,7 @@ import { TokenModel } from '../../models/token.model';
 @Injectable()
 export class AuthenticationService {
   private apiAuthUrl = 'http://localhost:3000/api/auth'; 
-  private isAuthenticatedSubject = new Subject<any>();
+  private isAuthenticatedSubject = new Subject<boolean>();
 
   constructor(
     private http: HttpClient,
