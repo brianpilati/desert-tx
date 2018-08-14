@@ -12,13 +12,8 @@
   width: 100%;
 }
 
-.button-container {
-  width: 100%;
-  margin: 25px;
-}
-
 mat-card {
-  width: 550px;
+  width: 500px;
 }
 
 .signup {

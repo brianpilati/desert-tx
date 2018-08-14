@@ -5,6 +5,7 @@ const UserDomain = require('../../domains/users');
 const userDomain = new UserDomain(firebase);
 const corsOptions = require('../../libs/cors');
 const utilities = require('../../libs/utilities');
+const admin = require('../../libs/firebaseAdminConfiguration')
 
 router.post('/', cors(corsOptions), function(req, res) {
   userDomain.createUserLogin(req.body.email, req.body.password, ).then(function() {
