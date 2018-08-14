@@ -28,6 +28,11 @@ Installation
 copy the provided `serviceAccountKey.json` to the `node-server/libs` directory
 copy the provided `adminServiceAccountKey.json` to the `node-server/libs` directory
 
+# Angular Review
+
+$ npm run docs
+$ open docs/index.html
+
 # Execution
 
 ## Node Server
