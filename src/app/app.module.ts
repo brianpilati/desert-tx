@@ -38,6 +38,7 @@ import { UserService } from './users/services/user.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { SubmitButtonDirective } from './directives/submit-button-directive/submit-button.directive';
 import { HttpStatusService } from './http/http-status.service';
+import { LoadingSpinnerComponent } from './http/spinner/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { HttpStatusService } from './http/http-status.service';
     SignupComponent,
     ToolbarComponent,
     UserProfileComponent,
-    SubmitButtonDirective
+    SubmitButtonDirective,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,
