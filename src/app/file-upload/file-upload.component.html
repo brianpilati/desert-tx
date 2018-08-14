@@ -52,6 +52,8 @@
                 <form 
                   [formGroup]="fileUploadForm"
                   class="file-upload-form-container"
+                  (submit)="uploadFile($event)"
+                  appSubmitButton
                 >
                   <div class="file-upload-container">
                     <mat-form-field class="file-upload-full-width">
@@ -67,6 +69,7 @@
                     fxLayoutAlign="space-evenly center"
                   >
                     <button
+                      type="button"
                       (click)="openInput()"
                       mat-raised-button
                       color="accent"
@@ -80,7 +83,8 @@
                       #fileInput
                     >
                     <button
-                      (click)="uploadFile($event)"
+                      type="submit"
+                      #submitButton
                       [disabled]="fileDataUri.length === 0"
                       mat-raised-button
                       color="accent"

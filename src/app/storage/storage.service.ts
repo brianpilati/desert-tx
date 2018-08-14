@@ -3,6 +3,7 @@ import { TokenModel } from '../models/token.model';
 
 @Injectable()
 export class StorageService {
+
   constructor(@Inject('LOCAL_STORAGE') private localStorage: any) {}
 
   private clearAccessToken(): void {

@@ -36,6 +36,8 @@ import { LogoutComponent } from './authentication/logout/logout.component';
 import { SignupComponent } from './users/signup/signup.component';
 import { UserService } from './users/services/user.service';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { SubmitButtonDirective } from './directives/submit-button-directive/submit-button.directive';
+import { HttpStatusService } from './http/http-status.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
     LogoutComponent,
     SignupComponent,
     ToolbarComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    SubmitButtonDirective
   ],
   imports: [
     BrowserModule,
@@ -79,6 +82,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
       provide: 'LOCAL_STORAGE',
       useFactory: getLocalStorage
     },
+    HttpStatusService,
     StorageService,
     UserService
   ],

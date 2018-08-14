@@ -14,6 +14,7 @@
       <form
         [formGroup]="registrationForm"
         (submit)="register()"
+        appSubmitButton
       >
         <div fxLayout="column"
           fxLayoutAlign="space-evenly center"
@@ -56,6 +57,7 @@
           >
             <button
               type="submit"
+              #submitButton
               [disabled]="!registrationForm.valid"
               mat-raised-button
               color="accent"

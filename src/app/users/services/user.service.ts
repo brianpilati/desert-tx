@@ -41,9 +41,6 @@ export class UserService {
     );
   }
 
-
-
-
   get(): Observable<UserModel> {
     return this.http.get<UserModel>(`${this.apiUserUrl}`);
   }

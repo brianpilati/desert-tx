@@ -17,6 +17,7 @@
               <form
                 [formGroup]="userProfileForm"
                 (submit)="updateUser()"
+                appSubmitButton
               >
                 <div fxLayout="column"
                   fxLayoutAlign="space-evenly center"
@@ -53,6 +54,7 @@
                   >
                     <button
                       type="submit"
+                      #submitButton
                       [disabled]="!userProfileForm.valid"
                       mat-raised-button
                       color="accent"
@@ -83,6 +85,7 @@
             <form
               [formGroup]="userPasswordForm"
               (submit)="updatePassword()"
+              appSubmitButton
             >
               <div fxLayout="column"
                 fxLayoutAlign="space-evenly center"
@@ -116,6 +119,7 @@
                 >
                   <button
                     type="submit"
+                    #submitButton
                     [disabled]="!userPasswordForm.valid"
                     mat-raised-button
                     color="accent"

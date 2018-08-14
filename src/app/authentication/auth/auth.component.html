@@ -15,6 +15,7 @@
     <form
       [formGroup]="authForm"
       (submit)="authenticate()"
+      appSubmitButton
     >
       <div fxLayout="column"
         fxLayoutAlign="space-evenly center"
@@ -45,6 +46,7 @@
           >
             <button
               type="submit"
+              #submitButton
               [disabled]="!authForm.valid"
               mat-raised-button
               color="accent"

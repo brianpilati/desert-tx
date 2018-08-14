@@ -23,7 +23,6 @@ export class ToolbarComponent implements OnInit {
     this.photoUrl = this.storageService.getUserPhotoUrl();
 
     userService.getUserProfileUpdatedSubject().subscribe((isUpdated) => {
-      console.log(isUpdated);
       if (isUpdated) {
         this.photoUrl = this.storageService.getUserPhotoUrl();
       }

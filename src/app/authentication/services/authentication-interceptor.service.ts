@@ -1,22 +1,21 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { StorageService } from '../../storage/storage.service';
-import { catchError, last } from 'rxjs/internal/operators';
-import { UNAUTHORIZED } from '../../../../node_modules/http-status-codes';
+import { catchError, tap, finalize } from 'rxjs/internal/operators';
+import { UNAUTHORIZED } from 'http-status-codes';
 import { AuthenticationService } from './authentication.service';
+import { HttpStatusService } from '../../http/http-status.service';
 
 @Injectable()
 export class AuthenticationInterceptorService implements HttpInterceptor {
-  storageService: StorageService;
-
-  constructor(private injector: Injector) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private storageService: StorageService,
+    private httpStatusService: HttpStatusService
+  ) { }
 
   private getAccessToken(): string {
-    if (!this.storageService) {
-      this.storageService = this.injector.get(StorageService);
-    }
-
     return this.storageService.getAccessToken();
   }
 
@@ -28,12 +27,19 @@ export class AuthenticationInterceptorService implements HttpInterceptor {
       }
     });
 
-    return next.handle(request).pipe(catchError((error) => {
-      if (error.status == UNAUTHORIZED) {
-        const authenticationService = this.injector.get(AuthenticationService);
-        authenticationService.logout();
-      }
-      return of(error);
-    }) as any);
+    return next.handle(request).pipe(
+      tap(() => {
+        this.httpStatusService.emitHttpStatus(true);
+      }),
+      finalize(() => {
+        this.httpStatusService.emitHttpStatus(false);
+      }),
+      catchError((error) => {
+        if (error.status == UNAUTHORIZED) {
+          this.authenticationService.logout();
+        }
+        return of(error);
+      }) as any
+    );
   }
 }
