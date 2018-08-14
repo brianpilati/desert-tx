@@ -30,7 +30,8 @@ export class FileUploadComponent implements OnInit {
 
   createForm() {
     this.fileUploadForm = this.formatBuilder.group({
-      description: ['', [Validators.required, Validators.maxLength(255)]]
+      description: ['', [Validators.required, Validators.maxLength(255)]],
+      file: [null, [Validators.required]]
     });
   }
 
@@ -79,6 +80,9 @@ export class FileUploadComponent implements OnInit {
       reader.readAsDataURL(this.fileInput.nativeElement.files[0]);
       reader.onload = () => {
         this.fileDataUri = reader.result;
+        this.fileUploadForm.patchValue({
+          file: reader.result
+        })
       }
     } else {
       this.errorMsg = 'File must be jpg, png, or gif and cannot be exceed 500 KB in size'
@@ -124,11 +128,9 @@ export class FileUploadComponent implements OnInit {
           }
         );
     }
-
   }
 
   validateFile(file) {
     return this.acceptedMimeTypes.includes(file.type) && file.size < 500000;
   }
-
 }

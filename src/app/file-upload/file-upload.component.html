@@ -85,7 +85,7 @@
                     <button
                       type="submit"
                       #submitButton
-                      [disabled]="fileDataUri.length === 0"
+                      [disabled]="fileUploadForm.invalid"
                       mat-raised-button
                       color="accent"
                     >

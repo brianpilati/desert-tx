@@ -1,6 +1,5 @@
-import { Directive, HostListener, ContentChild, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
-import { StorageService } from '../../storage/storage.service';
+import { Directive, HostListener, ContentChild, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { HttpStatusService } from '../../http/http-status.service';
 
 @Directive({
@@ -8,22 +7,25 @@ import { HttpStatusService } from '../../http/http-status.service';
 })
 export class SubmitButtonDirective implements OnInit, OnDestroy {
   httpStatusSubscription: Subscription;
-  @ContentChild('submitButton') submitButton;
+  buttonClicked = false;
+  @ContentChild('submitButton', {read: ElementRef}) private submitButton: ElementRef;
 
   constructor(
-    private httpStatusService: HttpStatusService 
+    private httpStatusService: HttpStatusService
   ) { }
 
   ngOnInit() {
     this.httpStatusSubscription = this.httpStatusService.getHttpStatusSubject().subscribe((status) => {
-      this.submitButton._elementRef.nativeElement.disabled = status;
+      if (this.buttonClicked) {
+        this.submitButton.nativeElement.disabled = status;
+        this.buttonClicked = status;
+      }
     });
-
   }
 
   @HostListener('submit')
   submit(): void {
-    this.submitButton._elementRef.nativeElement.disabled = true;
+    this.buttonClicked = true;
   }
 
   ngOnDestroy() {
