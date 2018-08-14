@@ -18,7 +18,6 @@ export class FileUploadService {
   ) {}
 
   uploadFile(data: any): Observable<any> {
-    console.log('what?');
     return this.http.post(`${environment.apiUrl}/upload-photos`, data);
   }
 
@@ -26,20 +25,16 @@ export class FileUploadService {
     return this.http.post(`${this.apiFileUploadUrl}`, data);
   }
 
+  mapFileUri(file: FileModel): FileModel {
+    file.uri = this.sanitizer.bypassSecurityTrustResourceUrl( `https://s3.amazonaws.com/desert-tx/${file.fileName}`);
+    return file;
+  }
+
   getFiles(): Observable<FileModel[]> {
     return this.http.get<FileModel[]>(`${this.apiFileUploadUrl}`).pipe(
       map(files => {
         return files.map( file => {
-
-
-
-
-
-          file.uri = 
-          this.sanitizer.bypassSecurityTrustResourceUrl(
-            `https://s3.amazonaws.com/desert-tx/${file.fileName}`
-          );
-          return file;
+          return this.mapFileUri(file);
         })
       })
     );

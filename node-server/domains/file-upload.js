@@ -15,7 +15,8 @@ class FileUploadDomain {
       var uid = firebase.auth().currentUser.uid;
       const filesRef = firebase.database().ref('files').child( uid);
       filesRef.push({
-        fileName: body['fileName']
+        fileName: body['fileName'],
+        description: body['description']
       });
     });
   }

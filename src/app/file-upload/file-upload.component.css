@@ -26,6 +26,49 @@ mat-card {
   align-items: center;
   justify-content: center;
 }
-.preview-image {
-  width: 90%;
+
+.preview-container {
+  margin: 10px;
+}
+
+.preview-image-container {
+  text-align: center;
+  border: 1px solid black;
+  height: 302px;
+  width: 302px;
+}
+
+.image {
+  max-height: 300px;
+}
+
+.file-upload-container {
+  margin: 10px;
+}
+
+.loading-class {
+  margin: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.file-upload-form-container {
+  min-width: 150px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.file-upload-full-width {
+  width: 100%;
+}
+
+mat-card {
+  width: 500px;
+  padding: 0;
+}
+
+.file-upload-group-container {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
 }

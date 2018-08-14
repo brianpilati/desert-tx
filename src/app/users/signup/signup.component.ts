@@ -11,7 +11,6 @@ import { RegistrationValidator } from '../../libs/registration-validator';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-
   public registrationForm: FormGroup;
   public passwordFormGroup: FormGroup;
 

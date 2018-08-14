@@ -2,6 +2,7 @@ import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
 import { StorageService } from '../storage/storage.service';
 import { FileUploadService } from './services/file-upload.service';
 import { FileModel } from '../models/file.model';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-file-upload',
@@ -9,21 +10,40 @@ import { FileModel } from '../models/file.model';
   styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent implements OnInit {
+  public fileUploadForm: FormGroup;
 
   @ViewChild('fileInput') fileInput: ElementRef;
   public carouselPhotos: FileModel[];
   fileDataUri = '';
   errorMsg = '';
+  selectedTab = 0;
+  isLoading = true;
+  disabled = true;
 
   constructor(
     private fileUploadService: FileUploadService,
+    private formatBuilder: FormBuilder,
     private storageService: StorageService
-  ) {}
+  ) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.fileUploadForm = this.formatBuilder.group({
+      description: ['', [Validators.required, Validators.maxLength(255)]]
+    });
+  }
 
   ngOnInit() {
-    this.fileUploadService.getFiles().subscribe((files) => 
+    this.fileUploadService.getFiles().subscribe((files) => {
+      this.isLoading = false;
       this.carouselPhotos = files
-    );
+      if (files.length === 0) {
+        this.selectedTab = 1;
+      } else {
+        this.disabled = false;
+      }
+    });
   }
 
   acceptedMimeTypes = [
@@ -47,6 +67,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   openInput(): void { 
+    this.clearForm();
     this.fileInput.nativeElement.click();
   }
 
@@ -64,6 +85,13 @@ export class FileUploadComponent implements OnInit {
     }
   }
 
+  private clearForm() {
+    this.fileDataUri = '';
+    this.fileInput.nativeElement.value = '';
+    this.errorMsg = '';
+    this.fileUploadForm.reset();
+  }
+
   uploadFile(event: Event) {
     event.preventDefault();
     // get only the base64 file and post it
@@ -77,11 +105,16 @@ export class FileUploadComponent implements OnInit {
       this.fileUploadService.uploadFile(data)
         .subscribe(
           res => {
-            this.fileUploadService.saveFile(<FileModel>{
-              fileName: data.fileName
-            }).subscribe(res => {
-              this.fileDataUri = '';
-              this.fileInput.nativeElement.value = '';
+            const newFile = <FileModel>{
+              fileName: data.fileName,
+              description: this.fileUploadForm.get('description').value
+            };
+
+            this.fileUploadService.saveFile(newFile).subscribe(res => {
+              this.selectedTab = 0;
+              this.disabled = false;
+              this.carouselPhotos.push(this.fileUploadService.mapFileUri(newFile));
+              this.clearForm();
             }, err => {
               this.errorMsg = 'Could not upload image.';
             });
