@@ -35,7 +35,7 @@ export class AuthenticationInterceptorService implements HttpInterceptor {
         this.httpStatusService.emitHttpStatus(false);
       }),
       catchError((error) => {
-        if (error.status == UNAUTHORIZED) {
+        if (error.status === UNAUTHORIZED) {
           this.authenticationService.logout();
         }
         return of(error);
