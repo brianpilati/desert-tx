@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { StorageService } from '../../storage/storage.service';
-import { catchError, tap, finalize } from 'rxjs/internal/operators';
-import { UNAUTHORIZED } from 'http-status-codes';
-import { AuthenticationService } from './authentication.service';
 import { HttpStatusService } from '../../http/http-status.service';
+import { finalize, tap } from 'rxjs/internal/operators';
 
 @Injectable()
 export class AuthenticationInterceptorService implements HttpInterceptor {
   constructor(
-    private authenticationService: AuthenticationService,
     private storageService: StorageService,
     private httpStatusService: HttpStatusService
   ) { }
@@ -33,13 +30,7 @@ export class AuthenticationInterceptorService implements HttpInterceptor {
       }),
       finalize(() => {
         this.httpStatusService.emitHttpStatus(false);
-      }),
-      catchError((error) => {
-        if (error.status === UNAUTHORIZED) {
-          this.authenticationService.logout();
-        }
-        return of(error);
-      }) as any
+      })
     );
   }
 }

@@ -1,0 +1,8 @@
+.snack-bar {
+  cursor: pointer;
+}
+
+.mat-snack-bar-handset .mat-snack-bar-container {
+  display: flex;
+  justify-content: center;
+}

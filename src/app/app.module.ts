@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -18,7 +18,8 @@ import {
   MatMenuModule,
   MatProgressSpinnerModule,
   MatToolbarModule,
-  MatTabsModule
+  MatTabsModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 import { FileUploadComponent } from './file-upload/file-upload.component';
@@ -39,18 +40,21 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
 import { SubmitButtonDirective } from './directives/submit-button-directive/submit-button.directive';
 import { HttpStatusService } from './http/http-status.service';
 import { LoadingSpinnerComponent } from './http/spinner/loading-spinner/loading-spinner.component';
+import { ErrorHandlerService } from './libs/error-handling/error-handling.service';
+import { SnackBarComponent } from './libs/snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
     FileUploadComponent,
+    LoadingSpinnerComponent,
     LogoutComponent,
     SignupComponent,
-    ToolbarComponent,
-    UserProfileComponent,
+    SnackBarComponent,
     SubmitButtonDirective,
-    LoadingSpinnerComponent
+    ToolbarComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -64,10 +68,11 @@ import { LoadingSpinnerComponent } from './http/spinner/loading-spinner/loading-
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
+    MatIconModule,
     MatInputModule,
     MatMenuModule,
-    MatIconModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     MatTabsModule,
     MatToolbarModule,
     ReactiveFormsModule
@@ -81,6 +86,10 @@ import { LoadingSpinnerComponent } from './http/spinner/loading-spinner/loading-
       multi: true
     },
     {
+      provide: ErrorHandler,
+      useClass: ErrorHandlerService
+    },
+    {
       provide: 'LOCAL_STORAGE',
       useFactory: getLocalStorage
     },
@@ -88,6 +97,7 @@ import { LoadingSpinnerComponent } from './http/spinner/loading-spinner/loading-
     StorageService,
     UserService
   ],
+  entryComponents: [SnackBarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
