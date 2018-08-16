@@ -1,8 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { TokenModel } from '../models/token.model';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class StorageService {
+  private userProfileUpdatedSubject = new Subject<boolean>();
 
   constructor(@Inject('LOCAL_STORAGE') private localStorage: any) {}
 
@@ -20,8 +22,13 @@ export class StorageService {
     Date.now() + 60 * 60 * 1000 * 2;
   }
 
+  getUserProfileUpdatedSubject(): Subject<boolean> {
+    return this.userProfileUpdatedSubject;
+  }
+
   savePhotoUrl(photoUrl: string): void {
     this.localStorage.photoUrl = photoUrl;
+    this.userProfileUpdatedSubject.next(true);
   }
 
   saveAccessToken(tokenModel: TokenModel): void {

@@ -14,7 +14,6 @@ export class ToolbarComponent implements OnInit {
 
   constructor(
     authenticationService: AuthenticationService,
-    userService: UserService,
     private storageService: StorageService
   ) { 
     authenticationService.getAuthenticatedSubject().subscribe((isAuthenticated) => {
@@ -22,10 +21,9 @@ export class ToolbarComponent implements OnInit {
     })
     this.photoUrl = this.storageService.getUserPhotoUrl();
 
-    userService.getUserProfileUpdatedSubject().subscribe((isUpdated) => {
-      if (isUpdated) {
-        this.photoUrl = this.storageService.getUserPhotoUrl();
-      }
+    storageService.getUserProfileUpdatedSubject().subscribe((isUpdated) => {
+      this.photoUrl = isUpdated ?
+        this.storageService.getUserPhotoUrl() : '';
     });
   }
 

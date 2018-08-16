@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/internal/operators';
 import { StorageService } from '../../storage/storage.service';
 import { AuthenticationModel } from '../../models/authentication.model';
@@ -15,7 +15,6 @@ import { AuthenticationService } from '../../authentication/services/authenticat
 })
 export class UserService {
   private apiUserUrl = 'http://localhost:3000/api/users'; 
-  private userProfileUpdatedSubject = new Subject<boolean>();
 
   constructor(
     private http: HttpClient,
@@ -23,9 +22,6 @@ export class UserService {
     private authenticationService: AuthenticationService
   ) {}
 
-  getUserProfileUpdatedSubject(): Subject<boolean> {
-    return this.userProfileUpdatedSubject;
-  }
 
   register(authentication: AuthenticationModel): Observable<TokenModel> {
     return this.http.post<TokenModel>(`${this.apiUserUrl}`, authentication)
@@ -41,7 +37,6 @@ export class UserService {
     return this.http.put<UserModel>(`${this.apiUserUrl}`, userModel).pipe(
       tap(() => {
         this.storageService.savePhotoUrl(userModel.photoUrl);
-        this.userProfileUpdatedSubject.next(true);
       })
     );
   }
